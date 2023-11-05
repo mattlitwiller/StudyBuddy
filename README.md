@@ -2,7 +2,9 @@
 
 > A Vue.js project
 
-## Vue.js installation
+## Vue.js installation 
+Check the version of node and npm
+Install if they are missing (links found below) - follow steps 3.1.1 ONLY (3.1.2 and beyond is not necessary)
 https://mcgill-ecse321-fall2022.github.io/#truefrontend
 
 ## Build Setup
