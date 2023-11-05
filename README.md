@@ -2,6 +2,9 @@
 
 > A Vue.js project
 
+## Vue.js installation
+https://mcgill-ecse321-fall2022.github.io/#truefrontend
+
 ## Build Setup
 
 ``` bash
