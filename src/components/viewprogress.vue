@@ -1,12 +1,8 @@
 <template>
   <div class="container">
-    <!-- Back button -->
     <div class="back-button" @click="goBack">← Back</div>
-
-    <!-- Progress title -->
     <h1>My Progress</h1>
 
-    <!-- Progress bar container -->
     <div class="progress-container">
       <div class="progress-bar">
         <div class="progress-item">Trainings Done ......................54</div>
@@ -80,18 +76,15 @@ h1 {
   height: 2px;
   background: #ccc;
 }
-
-/* If the items should not have the lines between them */
 .progress-item:not(:last-child):after {
   display: none;
 }
 
-/* Adjust the spacing */
 .progress-bar {
   padding: 20px 0;
 }
 
 .progress-item {
-  margin: 0 40px; /* Increase the space around the numbers */
+  margin: 0 40px;
 }
 </style>

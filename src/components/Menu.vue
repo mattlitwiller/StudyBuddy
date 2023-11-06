@@ -1,4 +1,3 @@
-<!-- src/components/Menu.vue -->
 <template>
     <div class="menu-container">
       <h1>What Would you Like to do?</h1>

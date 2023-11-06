@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import Home from '@/components/Home'
 import Menu from '@/components/Menu'
-import ViewSchedule from '@/components/ViewSchedule'
+import viewprogress from '@/components/viewprogress'
+import createquestions from '@/components/createquestions' 
 
 Vue.use(Router)
 
@@ -16,20 +17,24 @@ export default new Router({
       component: Hello,
     },
     {
-      path: '/home', // Change this to a unique path
+      path: '/home', 
       name: 'Home',
       component: Home,
     },
     {
-      path: '/menu', // Change this to a unique path
+      path: '/menu', 
       name: "Menu",
       component: Menu,
     },
     {
-      path: '/view-schedule', // Path should be kebab-case
-      name: 'ViewSchedule', // Name is typically PascalCase or camelCase
-      component: ViewSchedule,
+      path: '/view-progress', 
+      name: "ViewProgress",
+      component: viewprogress,
     },
-    // Add other routes here as needed
+    {
+      path: '/create-questions', 
+      name: "createquestions",
+      component: createquestions,
+    },
   ]
 })

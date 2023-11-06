@@ -1,9 +1,8 @@
-<!-- src/components/Home.vue -->
 <template>
   <div class="container">
     <img src="@/assets/buddy-approval.png" alt="StudyBuddy Logo" class="logo"/>
     <h1>Welcome To StudyBuddy</h1>
-    <router-link to="/menu"> <!-- Update this line -->
+    <router-link to="/menu"> 
       <button class="continue-button">Continue</button>
     </router-link>
   </div>
@@ -22,7 +21,7 @@ export default {
 }
 
 .logo {
-  width: 100px; /* or whatever size fits your design */
+  width: 100px; 
   margin-bottom: 20px;
 }
 
