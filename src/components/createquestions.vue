@@ -1,6 +1,7 @@
 <template>
     <div>
       <div>
+        <div class="back-button" @click="goBack">← Back</div>
         <input v-model="newQuestion.text" placeholder="Enter Question" />
         <textarea v-model="newQuestion.answer" placeholder="Enter Answer"></textarea>
         <input v-model="newQuestion.hint" placeholder="Enter Hint" />
@@ -45,6 +46,9 @@
       this.loadQuestions();
     },
     methods: {
+      goBack() {
+      this.$router.go(-1);
+    },
         goToMenu() {
       this.$router.push('/menu'); 
     },

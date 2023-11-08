@@ -5,6 +5,7 @@ import Home from '@/components/Home'
 import Menu from '@/components/Menu'
 import viewprogress from '@/components/viewprogress'
 import createquestions from '@/components/createquestions' 
+import viewschedule from '@/components/viewschedule' 
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/view-progress', 
       name: "ViewProgress",
       component: viewprogress,
+    },
+    {
+      path: '/view-schedule', 
+      name: "ViewSchedule",
+      component: viewschedule,
     },
     {
       path: '/create-questions', 
