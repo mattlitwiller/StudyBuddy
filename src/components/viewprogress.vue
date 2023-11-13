@@ -34,12 +34,6 @@ export default {
   padding-top: 50px;
 }
 
-.back-button {
-  margin-bottom: 30px;
-  cursor: pointer;
-  font-size: 18px;
-}
-
 h1 {
   margin-bottom: 20px;
 }
@@ -86,5 +80,12 @@ h1 {
 
 .progress-item {
   margin: 0 40px;
+}
+
+/* Add a specific class for the back button if it's not the same as other buttons */
+.back-button {
+  padding: 12px 12px; /* Even smaller padding */
+  font-size: 20px; /* Even smaller font size */
+  width: auto; /* Only as wide as necessary */
 }
 </style>
