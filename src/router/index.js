@@ -7,6 +7,7 @@ import viewprogress from '@/components/viewprogress'
 import createquestions from '@/components/createquestions' 
 import viewschedule from '@/components/viewschedule'
 import ViewDecks from '../components/ViewDecks.vue';
+import QuizPage from '@/components/QuizPage'
 
 
 Vue.use(Router)
@@ -18,6 +19,12 @@ export default new Router({
       path: '/',
       name: "Hello",
       component: Hello,
+    },
+    {
+      path: '/quiz/:deck', // :deck is a dynamic segment that will be replaced by the actual deck name
+      name: 'QuizPage',
+      component: QuizPage,
+      props: true, // This allows the deck parameter to be passed as a prop to the QuizPage component
     },
     {
       path: '/home', 

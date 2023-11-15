@@ -82,10 +82,9 @@ h1 {
   margin: 0 40px;
 }
 
-/* Add a specific class for the back button if it's not the same as other buttons */
 .back-button {
-  padding: 12px 12px; /* Even smaller padding */
-  font-size: 20px; /* Even smaller font size */
-  width: auto; /* Only as wide as necessary */
+  padding: 12px 12px; 
+  font-size: 20px; 
+  width: auto; 
 }
 </style>

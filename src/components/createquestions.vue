@@ -1,16 +1,12 @@
 <template>
   <div>
-    <!-- Back Button -->
     <button class="back-button" @click="goBack">Back</button>
-
-    <!-- Input Fields and Add Button -->
     <div>
       <div>
         <label for="deck">Select Deck:</label>
         <select v-model="newQuestion.deck" id="deck">
           <option value="COMP551">COMP551</option>
           <option value="COMP421">COMP421</option>
-          <!-- Add more options as needed -->
         </select>
       </div>
       <div>
@@ -24,7 +20,6 @@
     </div>
 
 
-    <!-- Questions List -->
     <div v-if="questions.length > 0">
       <h2>Saved Questions</h2>
       <ul>
@@ -38,11 +33,9 @@
       </ul>
     </div>
 
-    <!-- Modal for Congratulations -->
     <div v-if="showCongratsModal" class="modal">
       <div class="modal-content">
         <span class="close" @click="closeModal">&times;</span>
-        <!-- Logo Image -->
         <img src="@/assets/buddy-icon.png" alt="Buddy Icon" class="congrats-logo"/>
         <p>Congratulations! You've successfully created a new question.</p>
       </div>
@@ -73,7 +66,7 @@ Explanation
       this.$router.push('/menu'); 
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.push('/menu');
     },
     addQuestion() {
     if (this.newQuestion.text && this.newQuestion.answer && this.newQuestion.hint) {
@@ -122,18 +115,17 @@ button {
   color: white;
   cursor: pointer;
   margin: 5px 10px;
-  padding: 5px 10px; /* Smaller padding */
+  padding: 5px 10px; 
   border: 1px solid #ccc; 
   border-radius: 4px; 
-  width: auto; /* Adjust width as needed, or remove for content-width */
-  font-size: 14px; /* Smaller font size */
+  width: auto; 
+  font-size: 14px; 
 }
 
-/* Add a specific class for the back button if it's not the same as other buttons */
 .back-button {
-  padding: 12px 12px; /* Even smaller padding */
-  font-size: 20px; /* Even smaller font size */
-  width: auto; /* Only as wide as necessary */
+  padding: 12px 12px; 
+  font-size: 20px; 
+  width: auto;
 }
 .menu-image-button img {
   width: 50px; 
@@ -145,7 +137,7 @@ div {
   flex-direction: column;
   align-items: center;
   margin: 20px;
-  width: 100%; /* Ensure the parent container takes the full width */
+  width: 100%;
 }
 
 input, textarea {
@@ -153,7 +145,7 @@ input, textarea {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 50%; /* This will now take up 100% of the div's width */
+  width: 50%; 
 }
   
   ul {
@@ -204,10 +196,10 @@ input, textarea {
 }
 .congrats-logo {
   display: block;
-  margin: 0 auto; /* Center the logo */
-  width: 100px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
-  padding-bottom: 20px; /* Space below the logo */
+  margin: 0 auto; 
+  width: 100px; 
+  height: auto; 
+  padding-bottom: 20px;
 }
 
 .close:hover,

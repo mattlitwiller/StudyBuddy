@@ -7,7 +7,6 @@
           <strong>Q:</strong> {{ question.text }} <br/>
           <strong>A:</strong> {{ question.answer }} <br/>
           <strong>Hint:</strong> {{ question.hint }}
-          <!-- Add more details or actions as needed -->
         </li>
       </ul>
     </div>
@@ -18,6 +17,5 @@ export default {
   props: {
     questions: Array
   },
-  // Any additional methods or data properties if needed
 };
 </script>
