@@ -1,6 +1,6 @@
 <template>
     <div class="schedule-wrapper">
-      <button @click="goBack" class="back-btn">Back</button>
+      <button @click="goBack" class="back-button">Back</button>
       <button @click="openModalForCreate" class="add-schedule-btn">Add Schedule</button>
       <schedule-modal
         :show="showModal"
@@ -176,5 +176,21 @@
   .schedule-deck {
     font-size: 14px;
     color: #666;
+  }
+  .back-button {
+  padding: 12px 12px; 
+  font-size: 20px; 
+  width: auto; 
+  background-color: #4CAF50; 
+  color: white;
+  cursor: pointer;
+  margin: 5px 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  width: auto; 
+  font-size: 14px; 
+  }
+  .back-button:hover {
+    background-color: #14df22;
   }
   </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="back-button" @click="goBack">← Back</div>
+    <button class="back-button" @click="goBack">Back</button>
     <h1>My Progress</h1>
 
     <div class="progress-container">
@@ -86,5 +86,16 @@ h1 {
   padding: 12px 12px; 
   font-size: 20px; 
   width: auto; 
+  background-color: #4CAF50; 
+  color: white;
+  cursor: pointer;
+  margin: 5px 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  width: auto; 
+  font-size: 14px; 
+}
+.back-button:hover {
+  background-color: #14df22;
 }
 </style>
