@@ -1,34 +1,43 @@
 <template>
-    <div>
-      <!-- Back Button -->
-      <button class="back-button" @click="goBack">Back</button>
-  
-      <h2>Select a Deck</h2>
-      <ul class="decks-list">
-        <li v-for="deck in decks" :key="deck" @click="selectDeck(deck)">
-          {{ deck }}
+  <div>
+    <button class="back-button" @click="goBack">Back</button>
+    <h2>Select a Deck</h2>
+    <ul class="decks-list">
+      <li v-for="deck in decks" :key="deck" @click="selectDeck(deck)">
+        {{ deck }}
+      </li>
+    </ul>
+    
+    <div v-if="selectedDeck">
+      <h3>Questions for {{ selectedDeck }}</h3>
+      <!-- Quiz Button -->
+      <button class="quiz-button" @click="startQuiz">Quiz</button>
+
+      <!-- Quiz Component -->
+      <quiz-page v-if="showQuiz" :selected-deck="selectedDeck"></quiz-page>
+      <ul class="questions-list" v-if="!showQuiz">
+        <li v-for="(question, index) in filteredQuestions" :key="index">
+          <div class="question-title"><strong>Q:</strong> {{ question.text }}</div>
+          <div><strong>A:</strong> {{ question.answer }}</div>
+          <div><strong>Hint:</strong> {{ question.hint }}</div>
         </li>
       </ul>
-      <div v-if="selectedDeck">
-        <h3>Questions for {{ selectedDeck }}</h3>
-        <ul class="questions-list">
-          <li v-for="(question, index) in filteredQuestions" :key="index">
-            <div class="question-title"><strong>Q:</strong> {{ question.text }}</div>
-            <div><strong>A:</strong> {{ question.answer }}</div>
-            <div><strong>Hint:</strong> {{ question.hint }}</div>
-          </li>
-        </ul>
-      </div>
     </div>
-  </template>
+  </div>
+</template>
 
 <script>
+import QuizPage from './QuizPage.vue'; // Make sure the path is correct
 export default {
+  components: {
+    QuizPage // Register the QuizComponent
+  },
   data() {
     return {
-      decks: ['COMP551', 'COMP421'], // Example decks
+      decks: ['COMP551', 'COMP421'],
       selectedDeck: null,
-      questions: [] // This will hold the questions data
+      questions: [],
+      showQuiz: false,
     };
   },
   created() {
@@ -41,7 +50,6 @@ export default {
   },
   methods: {
     loadQuestions() {
-      // Example: Loading from localStorage
       const storedQuestions = localStorage.getItem('questions');
       if (storedQuestions) {
         this.questions = JSON.parse(storedQuestions);
@@ -52,12 +60,28 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    startQuiz() {
+      this.$router.push({ name: 'QuizPage', params: { deck: this.selectedDeck } });
     }
   }
 };
 </script>
 <style scoped>
-/* Styling for the Decks List */
+.quiz-button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.quiz-button:hover {
+  background-color: #45a049;
+}
 .decks-list {
   list-style-type: none;
   padding: 0;
@@ -76,7 +100,6 @@ export default {
   background-color: #e0e0e0;
 }
 
-/* Styling for the Questions List */
 .questions-list {
   list-style-type: none;
   padding: 0;
