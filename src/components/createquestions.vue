@@ -125,7 +125,18 @@ button {
 .back-button {
   padding: 12px 12px; 
   font-size: 20px; 
-  width: auto;
+  width: auto; 
+  background-color: #4CAF50; 
+  color: white;
+  cursor: pointer;
+  margin: 5px 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  width: auto; 
+  font-size: 14px; 
+}
+.back-button:hover {
+  background-color: #14df22;
 }
 .menu-image-button img {
   width: 50px; 
