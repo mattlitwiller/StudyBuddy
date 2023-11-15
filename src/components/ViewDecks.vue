@@ -128,7 +128,19 @@ export default {
   transition: background-color 0.3s;
   margin-bottom: 20px;
 }
-
+.back-button {
+  padding: 12px 12px; 
+  font-size: 20px; 
+  width: auto; 
+  background-color: #4CAF50; 
+  color: white;
+  cursor: pointer;
+  margin: 5px 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  width: auto; 
+  font-size: 14px; 
+}
 .back-button:hover {
   background-color: #14df22;
 }
