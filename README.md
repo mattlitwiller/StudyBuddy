@@ -1,6 +1,6 @@
 # StudyBuddy
 
-> A Vue.js project
+A Student Project in McGill's ECSE424: Human-Computer Interaction. This simplified flashcard application aims to engage students with ADHD with their studies by offering a rewarding way of studying for exams.
 
 ## Node.js installation 
 Vue.js relies on Node.js and npm. Installing Node.js will automatically install npm onto your system.
