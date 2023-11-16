@@ -1,45 +1,63 @@
 <template>
   <div>
-    <button class="btn btn-secondary" @click="goBack">Back</button>
-    <div>
-      <div>
+    <div class="container" style="width:600px; margin: auto;">
+      <button class="btn btn-secondary" @click="goBack">Back</button>
+    </div>
+    <br>
+    <div class="card" style="width: 600px; margin: auto;">
+      <div class="card-header">
         <label for="deck">Select Deck:</label>
         <select class="pointer" v-model="newQuestion.deck" id="deck">
           <option value="COMP551">COMP551</option>
           <option value="COMP421">COMP421</option>
         </select>
       </div>
-      <div>
-        <input v-model="newQuestion.text" placeholder="Enter Question" />
-        <textarea v-model="newQuestion.answer" placeholder="Enter Answer"></textarea>
-        <input v-model="newQuestion.hint" placeholder="Enter Hint" />
-        <button class="btn btn-primary" @click="addQuestion"
-          :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">Add Question</button>
+      <div class="card-body">
+        <div>
+          <input v-model="newQuestion.text" placeholder="Enter Question" style="width:500px;">
+          <textarea v-model="newQuestion.answer" placeholder="Enter Answer" style="width:500px;"></textarea>
+          <input v-model="newQuestion.hint" placeholder="Enter Hint" style="width:500px;" />
+          <button class="btn btn-primary" @click="addQuestion"
+            :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">Add Question</button>
+        </div>
       </div>
     </div>
+    <br>
     <div v-if="questions.length > 0">
-      <h2>Saved Questions</h2>
-      <ul>
-        <li v-for="(question, index) in questions" :key="index">
-          <strong>Deck:</strong> {{ question.deck }} <br />
-          <strong>Q:</strong> {{ question.text }} <br />
-          <strong>A:</strong> {{ question.answer }} <br />
-          <strong>Hint:</strong> {{ question.hint }} <br />
-          <button class="btn btn-danger" @click="removeQuestion(index)">Remove</button>
-        </li>
-      </ul>
-    </div>
-    <div v-if="showCongratsModal" class="modal">
-      <div class="modal-content">
-        <span class="close" @click="closeModal">&times;</span>
-        <img src="@/assets/buddy-icon.png" alt="Buddy Icon" class="congrats-logo" />
-        <p>Congratulations! You've successfully created a new question.</p>
+      <div class="card" style="width:600px; margin: auto;">
+        <div class="card-header">Created Questions</div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" v-for="(question, index) in questions" :key="index">
+              <div class="row" style="padding:10px;">
+                <div class="col-sm-10" style="text-align: left;">
+                  <strong>Deck:</strong> {{ question.deck }} <br>
+                  <strong>Question:</strong>
+                  <div>{{ question.text }}</div>
+                  <strong>Answer:</strong>
+                  <div> {{ question.answer }}</div>
+                  <strong>Hint:</strong>
+                  <div> {{ question.hint }}</div>
+                </div>
+                <div class="col-sm-2" style="display: grid; align-content: center;">
+                  <button class="btn btn-outline-danger float-end" @click="removeQuestion(index)">Delete</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div v-if="showCongratsModal" class="modal">
+        <div class="modal-content">
+          <span class="close" @click="closeModal">&times;</span>
+          <img src="@/assets/buddy-icon.png" alt="Buddy Icon" class="congrats-logo" />
+          <p>Congratulations! You've successfully created a new question.</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
-Explanation
-  
+
 <script>
 export default {
   data() {
@@ -111,13 +129,13 @@ export default {
   height: auto;
 }
 
-div {
+/* div {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 20px;
   width: 100%;
-}
+} */
 
 input,
 textarea {
