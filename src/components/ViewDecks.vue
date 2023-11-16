@@ -1,17 +1,17 @@
 <template>
   <div>
-    <button class="back-button" @click="goBack">Back</button>
+    <button class="btn btn-secondary" @click="goBack">Back</button>
     <h2>Select a Deck</h2>
     <ul class="decks-list">
       <li v-for="deck in decks" :key="deck" @click="selectDeck(deck)">
         {{ deck }}
       </li>
     </ul>
-    
+
     <div v-if="selectedDeck">
       <h3>Questions for {{ selectedDeck }}</h3>
       <!-- Quiz Button -->
-      <button class="quiz-button" @click="startQuiz">Quiz</button>
+      <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
 
       <!-- Quiz Component -->
       <quiz-page v-if="showQuiz" :selected-deck="selectedDeck"></quiz-page>
@@ -82,6 +82,7 @@ export default {
 .quiz-button:hover {
   background-color: #45a049;
 }
+
 .decks-list {
   list-style-type: none;
   padding: 0;
@@ -94,6 +95,9 @@ export default {
   padding: 10px;
   border-radius: 4px;
   transition: background-color 0.2s ease-in-out;
+  width: 200px;
+  margin: auto;
+  margin-top: 10px;
 }
 
 .decks-list li:hover {
@@ -115,33 +119,5 @@ export default {
 
 .question-title {
   font-weight: bold;
-}
-
-.back-button {
-  padding: 10px 20px;
-  background-color: #17de5d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-  margin-bottom: 20px;
-}
-.back-button {
-  padding: 12px 12px; 
-  font-size: 20px; 
-  width: auto; 
-  background-color: #4CAF50; 
-  color: white;
-  cursor: pointer;
-  margin: 5px 10px;
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  width: auto; 
-  font-size: 14px; 
-}
-.back-button:hover {
-  background-color: #14df22;
 }
 </style>
