@@ -4,7 +4,7 @@
     <div>
       <div>
         <label for="deck">Select Deck:</label>
-        <select v-model="newQuestion.deck" id="deck" style="cursor: pointer;">
+        <select class="pointer" v-model="newQuestion.deck" id="deck">
           <option value="COMP551">COMP551</option>
           <option value="COMP421">COMP421</option>
         </select>
@@ -13,9 +13,8 @@
         <input v-model="newQuestion.text" placeholder="Enter Question" />
         <textarea v-model="newQuestion.answer" placeholder="Enter Answer"></textarea>
         <input v-model="newQuestion.hint" placeholder="Enter Hint" />
-        <button class="btn btn-primary" @click="addQuestion" :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">
-          Add Question
-        </button>
+        <button class="btn btn-primary" @click="addQuestion"
+          :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">Add Question</button>
       </div>
     </div>
     <div v-if="questions.length > 0">
@@ -188,6 +187,10 @@ h2 {
 .close:focus {
   color: black;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.pointer {
   cursor: pointer;
 }
 </style>
