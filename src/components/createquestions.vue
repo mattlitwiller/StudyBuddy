@@ -4,10 +4,10 @@
     <div>
       <div>
         <label for="deck">Select Deck:</label>
-        <select v-model="newQuestion.deck" id="deck">
-          <option value="COMP551">COMP551</option>
-          <option value="COMP421">COMP421</option>
-        </select>
+          <select v-model="newQuestion.deck" id="deck">
+            <option value="COMP551">COMP551</option>
+            <option value="COMP421">COMP421</option>
+          </select>
       </div>
       <div>
         <input v-model="newQuestion.text" placeholder="Enter Question" />
@@ -218,5 +218,8 @@ input, textarea {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+select:hover{
+  cursor:pointer
 }
   </style>
