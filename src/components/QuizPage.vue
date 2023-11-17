@@ -60,6 +60,7 @@ export default {
 
     revealAnswer() {
       this.$set(this.answerRevealed, this.currentQuestionIndex, true);
+      this.currentScore++;
     },
     nextQuestion() {
       if (this.currentQuestionIndex < this.questions.length - 1) {
