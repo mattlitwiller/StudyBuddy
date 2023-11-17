@@ -6,7 +6,7 @@
     <br>
     <div class="card" style="width: 600px; margin: auto;">
       <div class="card-header">
-        <label for="deck">Select Deck:</label>
+        <label for="deck">Question for Deck:</label>
         <select class="pointer" v-model="newQuestion.deck" id="deck">
           <option value="COMP551">COMP551</option>
           <option value="COMP421">COMP421</option>
@@ -17,9 +17,11 @@
           <input v-model="newQuestion.text" placeholder="Enter Question" style="width:500px;">
           <textarea v-model="newQuestion.answer" placeholder="Enter Answer" style="width:500px;"></textarea>
           <input v-model="newQuestion.hint" placeholder="Enter Hint" style="width:500px;" />
-          <button class="btn btn-primary" @click="addQuestion"
-            :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">Add Question</button>
         </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" @click="addQuestion"
+          :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">Add Question</button>
       </div>
     </div>
     <br>
