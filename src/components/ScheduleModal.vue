@@ -23,8 +23,11 @@
           </select>
         </div>
       </div>
-      <button class="btn btn-primary" @click="confirmAction" :disabled="!isValid">{{ isEditMode ? 'Update' : 'Create' }}</button>
-      <button class="btn btn-danger" @click="closeModal">Cancel</button>
+      <row>
+        <button class="btn btn-primary" @click="confirmAction" :disabled="!isValid">{{ isEditMode ? 'Update' : 'Create'
+        }}</button>
+        <button class="btn btn-danger" @click="closeModal">Cancel</button>
+      </row>
     </div>
   </div>
 </template>
