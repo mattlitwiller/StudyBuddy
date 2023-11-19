@@ -1,27 +1,51 @@
 <template>
   <div>
-    <button class="back-button" @click="goBack">Back</button>
-    <h2>Select a Deck</h2>
-    <ul class="decks-list">
-      <li v-for="deck in decks" :key="deck" @click="selectDeck(deck)">
-        {{ deck }}
-      </li>
-    </ul>
-    
+    <div class="container" style="width: 600px; margin: auto;">
+      <button class="btn btn-secondary" @click="goBack" style="margin-bottom: 20px;">Back</button>
+    </div>
+    <div class="card" style="width: 600px; margin: auto;">
+      <div class="card-header">My Decks</div>
+      <div class="card-body">
+        <div v-if="decks.length <= 0"> You have no decks yet, create one now!</div>
+        <div class="list-group list-group-flush">
+          <div v-for="deck in decks" :key="deck" class="list-group-item">
+            <button class="btn btn-light" @click="selectDeck(deck)" style="width: 500px; margin: auto;">{{ deck }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary">Create Deck</button>
+      </div>
+    </div>
+    <br>
     <div v-if="selectedDeck">
-      <h3>Questions for {{ selectedDeck }}</h3>
-      <!-- Quiz Button -->
-      <button class="quiz-button" @click="startQuiz">Quiz</button>
-
-      <!-- Quiz Component -->
-      <quiz-page v-if="showQuiz" :selected-deck="selectedDeck"></quiz-page>
-      <ul class="questions-list" v-if="!showQuiz">
-        <li v-for="(question, index) in filteredQuestions" :key="index">
-          <div class="question-title"><strong>Q:</strong> {{ question.text }}</div>
-          <div><strong>A:</strong> {{ question.answer }}</div>
-          <div><strong>Hint:</strong> {{ question.hint }}</div>
-        </li>
-      </ul>
+      <div v-if="!showQuiz" class="card" style="width: 600px; margin:auto;">
+        <div class="card-header"> Questions for {{ selectedDeck }}</div>
+        <div class="card-body">
+          <div class="list-group list-group-flush">
+            <div v-if="filteredQuestions.length <= 0">No questions for this deck yet, go make some!</div>
+            <div v-for="(question, index) in filteredQuestions" :key="index">
+              <div class="row" style="padding:10px;">
+                <div class="col-sm-10" style="text-align: left;">
+                  <strong>Question:</strong>
+                  <div>{{ question.text }}</div>
+                  <strong>Answer:</strong>
+                  <div> {{ question.answer }}</div>
+                  <strong>Hint:</strong>
+                  <div> {{ question.hint }}</div>
+                </div>
+                <div class="col-sm-2" style="display: grid; align-content: center;">
+                  <button class="btn btn-outline-danger float-end" @click="removeQuestion(index)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
+          <button class="btn btn-danger"> Delete Deck</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,81 +91,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.quiz-button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-.quiz-button:hover {
-  background-color: #45a049;
-}
-.decks-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.decks-list li {
-  cursor: pointer;
-  background-color: #f0f0f0;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.decks-list li:hover {
-  background-color: #e0e0e0;
-}
-
-.questions-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.questions-list li {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding: 15px;
-  border-radius: 4px;
-}
-
-.question-title {
-  font-weight: bold;
-}
-
-.back-button {
-  padding: 10px 20px;
-  background-color: #17de5d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-  margin-bottom: 20px;
-}
-.back-button {
-  padding: 12px 12px; 
-  font-size: 20px; 
-  width: auto; 
-  background-color: #4CAF50; 
-  color: white;
-  cursor: pointer;
-  margin: 5px 10px;
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  width: auto; 
-  font-size: 14px; 
-}
-.back-button:hover {
-  background-color: #14df22;
-}
-</style>
