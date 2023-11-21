@@ -21,7 +21,7 @@
       </div>
       <div class="card-footer">
         <button class="btn btn-primary" @click="addQuestion"
-          :disabled="!newQuestion.text || !newQuestion.answer || !newQuestion.hint">Add Question</button>
+          :disabled="!newQuestion.text || !newQuestion.answer">Add Question</button>
       </div>
     </div>
     <br>
@@ -85,7 +85,7 @@ export default {
       this.$router.push('/menu');
     },
     addQuestion() {
-      if (this.newQuestion.text && this.newQuestion.answer && this.newQuestion.hint) {
+      if (this.newQuestion.text && this.newQuestion.answer) {
         this.questions.push({ ...this.newQuestion });
         this.saveQuestions();
         this.newQuestion = { text: '', answer: '', hint: '' };
