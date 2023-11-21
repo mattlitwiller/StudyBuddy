@@ -8,6 +8,8 @@ import createquestions from '@/components/createquestions'
 import viewschedule from '@/components/viewschedule'
 import ViewDecks from '../components/ViewDecks.vue';
 import QuizPage from '@/components/QuizPage'
+import { BootstrapVue } from 'bootstrap-vue'
+
 
 
 Vue.use(Router)
