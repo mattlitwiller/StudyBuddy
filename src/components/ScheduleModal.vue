@@ -5,7 +5,8 @@
       <div class="schedule-options">
         <div class="day-checkboxes">
           <label v-for="day in daysOfWeek" :key="day" class="day-label">
-            <input class="pointer" type="checkbox" v-model="schedule.days[day]"> {{ day }}
+            <input class="pointer" type="checkbox" v-model="schedule.days[day]">
+            <pre> {{ day }}</pre> 
           </label>
         </div>
 
@@ -40,7 +41,7 @@ export default {
   },
   data() {
     return {
-      daysOfWeek: ['M', 'T', 'W', 'TR', 'F', 'S', 'D'],
+      daysOfWeek: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
       schedule: this.getDefaultSchedule()
     };
   },
@@ -84,13 +85,13 @@ export default {
     getDefaultSchedule() {
       return {
         days: {
-          'M': false,
-          'T': false,
-          'W': false,
-          'TR': false,
-          'F': false,
-          'S': false,
-          'D': false
+          'Mo': false,
+          'Tu': false,
+          'We': false,
+          'Tu': false,
+          'Fr': false,
+          'Sa': false,
+          'Su': false
         },
         time: '',
         deck: ''
