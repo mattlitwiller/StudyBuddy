@@ -3,27 +3,23 @@
       <div class="modal-content">
         <h2>When do you want to train?</h2>
         <div class="schedule-options">
-          <!-- Day selection using checkboxes -->
           <div class="day-checkboxes">
             <label v-for="day in daysOfWeek" :key="day" class="day-label">
               <input type="checkbox" v-model="schedule.days[day]"> {{ day }}
             </label>
           </div>
   
-          <!-- Time input field -->
           <div class="time-input">
             <label for="time">At what time?</label>
             <input type="time" id="time" v-model="schedule.time" required>
           </div>
   
-          <!-- Deck selection dropdown -->
           <div class="deck-selection">
             <label for="deck">For which deck?</label>
             <select id="deck" v-model="schedule.deck" required>
               <option value="" disabled>Select your deck</option>
               <option value="COMP551">COMP551</option>
-              <option value="COMP521">COMP521</option>
-              <option value="COMP542">COMP542</option>
+              <option value="COMP421">COMP421</option>
             </select>
           </div>
         </div>
@@ -111,22 +107,22 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    padding: 20px; /* Add some padding around the modal content */
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
   }
   
   .modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    max-width: 900px; /* You can adjust this as needed */
+    max-width: 900px; 
     max-height: 900px;
-    width: 100%; /* For responsiveness */
+    width: 100%; 
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
-    justify-content: center; /* This will center the content vertically */
-    overflow-y: auto; /* In case the content is longer than the screen */
+    justify-content: center; 
+    overflow-y: auto; 
   }
   </style>
