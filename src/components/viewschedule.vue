@@ -10,9 +10,8 @@
         <div class="list-group list-group-flush">
           <div v-for="(schedule, index) in schedules" :key="index" class="list-group-item">
             <div class="schedule-days">
-              <span v-for="(selected, day) in schedule.days" :key="day" class="schedule-day"
-                :class="{ 'active': selected }">
-                {{ day }}
+              <span v-for="(selected, day) in schedule.days" :key="day" class="schedule-day" v-if="selected">
+              {{ day }}
               </span>
             </div>
             <div class="schedule-time">Time: {{ schedule.time }}</div>

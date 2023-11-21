@@ -1,6 +1,6 @@
 <template>
     <div class="menu-container">
-      <h1>What Would you Like to do?</h1>
+      <h1>How Can I Help You Today?</h1>
       <router-link to="/create-questions" class="menu-button">Create Questions</router-link>
       <router-link to="/view-progress" class="menu-button">View Progress</router-link>
       <router-link to="/view-schedule" class="menu-button">View Schedule</router-link>
