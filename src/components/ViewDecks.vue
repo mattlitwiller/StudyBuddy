@@ -10,12 +10,13 @@
         <div class="list-group list-group-flush">
           <div v-for="deck in decks" :key="deck" class="list-group-item">
             <button class="btn btn-light" @click="selectDeck(deck)" style="width: 500px; margin: auto;">{{ deck }}</button>
-            <button class="btn btn-danger float-end" @click="deleteDeck(deck)">Delete</button> <!-- Delete button for each deck -->
           </div>
         </div>
       </div>
       <div class="card-footer">
         <button class="btn btn-primary" @click="openCreateDeckDialog">Create Deck</button>
+
+        <button class="btn btn-primary">Create Deck</button>
       </div>
     </div>
     <br>
@@ -39,6 +40,7 @@
                   <div> {{ question.hint }}</div>
                 </div>
                 <div class="col-sm-2" style="display: grid; align-content: center;">
+               
                 </div>
               </div>
             </div>
@@ -46,6 +48,7 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
+          <button class="btn btn-danger"> Delete Deck</button>
         </div>
       </div>
     </div>

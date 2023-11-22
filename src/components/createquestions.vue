@@ -8,6 +8,7 @@
       <div class="card-header">
         <label for="deck">Question for Deck:</label>
         <select class="pointer" v-model="newQuestion.deck" id="deck">
+
           <option v-for="deck in decks" :key="deck" :value="deck">{{ deck }}</option>
         </select>
       </div>
@@ -109,6 +110,7 @@ export default {
     alert("Please fill in all fields before adding a question.");
   }
 },
+
     closeModal() {
       this.showCongratsModal = false;
     },

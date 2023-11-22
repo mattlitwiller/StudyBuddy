@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+
       decks: [],
       daysOfWeek: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
       schedule: this.getDefaultSchedule()
