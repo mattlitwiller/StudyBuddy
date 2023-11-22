@@ -20,6 +20,9 @@
     </div>
     <br>
     <div v-if="selectedDeck">
+      <div v-if="quizError" class="alert alert-danger">
+      {{ quizError }}
+    </div>
       <div v-if="!showQuiz" class="card" style="width: 600px; margin:auto;">
         <div class="card-header"> Questions for {{ selectedDeck }}</div>
         <div class="card-body">
@@ -36,7 +39,6 @@
                   <div> {{ question.hint }}</div>
                 </div>
                 <div class="col-sm-2" style="display: grid; align-content: center;">
-                  <button class="btn btn-outline-danger float-end" @click="removeQuestion(index)">Delete</button>
                 </div>
               </div>
             </div>
@@ -44,7 +46,6 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
-          <button class="btn btn-danger"> Delete Deck</button> <!-- You might want to bind this button as well -->
         </div>
       </div>
     </div>
@@ -65,24 +66,30 @@
     </dialog>
   </div>
 </template>
+
 <script>
 import QuizPage from './QuizPage.vue'; // Make sure the path is correct
 export default {
   components: {
     QuizPage // Register the QuizComponent
   },
-  data() {
+  props: {
+  questions: Array, // Receiving the questions passed from the router
+  deck: String
+},
+data() {
     return {
       decks: [], // Initialize as empty
-    selectedDeck: null,
-    questions: [],
-    showQuiz: false,
-    newDeckName: '',
+      selectedDeck: null,
+      questions: [],
+      showQuiz: false,
+      newDeckName: '',
+      quizError: '' // Add this to handle error messages
     };
   },
   created() {
-    this.loadDecks(); // Load decks from localStorage
-  this.loadQuestions();
+    this.loadDecks();
+    this.loadQuestions();
   },
   computed: {
     filteredQuestions() {
@@ -90,6 +97,16 @@ export default {
     }
   },
   methods: {
+  removeQuestion(index) {
+      if (confirm('Are you sure you want to delete this question?')) {
+        this.questions.splice(index, 1);
+        const updatedQuestions = this.questions.filter((_, i) => i !== index);
+        localStorage.setItem('questions', JSON.stringify(updatedQuestions));
+        if (!this.filteredQuestions.length) {
+          this.selectedDeck = null;
+        }
+      }
+    },
     loadQuestions() {
       const storedQuestions = localStorage.getItem('questions');
       if (storedQuestions) {
@@ -149,8 +166,22 @@ export default {
       this.$router.go(-1);
     },
     startQuiz() {
-      this.$router.push({ name: 'QuizPage', params: { deck: this.selectedDeck } });
+    if (this.filteredQuestions.length === 0) {
+      // No questions for the selected deck
+      this.quizError = `No questions available for the deck "${this.selectedDeck}". Please create questions for this deck.`;
+    } else {
+      // Questions available, proceed with starting the quiz
+      this.quizError = ''; // Clear any previous error message
+      this.$router.push({
+        name: 'QuizPage',
+        params: {
+          deck: this.selectedDeck,
+          questions: this.filteredQuestions
+        }
+      });
     }
+  },
+
   }
 };
 </script>

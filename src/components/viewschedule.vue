@@ -89,12 +89,34 @@ export default {
     saveSchedules() {
       localStorage.setItem('schedules', JSON.stringify(this.schedules));
     },
+    
     loadSchedules() {
-      const savedSchedules = localStorage.getItem('schedules');
-      if (savedSchedules) {
-        this.schedules = JSON.parse(savedSchedules);
+  const savedSchedules = localStorage.getItem('schedules');
+  if (savedSchedules) {
+    this.schedules = JSON.parse(savedSchedules);
+
+    // Load the names of all decks from local storage
+    this.loadDecks();
+
+    // Associate each schedule with its corresponding deck name
+    this.schedules.forEach(schedule => {
+      const deckName = this.decks.find(deck => deck === schedule.deck);
+      if (deckName) {
+        schedule.deckName = deckName;
+      } else {
+        schedule.deckName = 'Unknown'; // or any default value
       }
-    },
+    });
+  }
+},
+loadDecks() {
+  const storedDecks = localStorage.getItem('decks');
+  if (storedDecks) {
+    this.decks = JSON.parse(storedDecks);
+  } else {
+    this.decks = []; // Initialize with an empty array if no decks are stored
+  }
+},
     closeModal() {
       this.editIndex = -1;
       this.editSchedule = null;

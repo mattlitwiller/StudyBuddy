@@ -96,15 +96,19 @@ export default {
       this.$router.push('/menu');
     },
     addQuestion() {
-      if (this.newQuestion.text && this.newQuestion.answer) {
-        this.questions.push({ ...this.newQuestion });
-        this.saveQuestions();
-        this.newQuestion = { text: '', answer: '', hint: '' };
-      } else {
-        alert("Please fill in all fields before adding a question.");
-      }
-      this.showCongratsModal = true;
-    },
+  if (!this.newQuestion.deck) {
+    alert("Please select a deck for the question.");
+    return;
+  }
+  if (this.newQuestion.text && this.newQuestion.answer) {
+    this.questions.push({ ...this.newQuestion });
+    this.saveQuestions();
+    this.newQuestion = { text: '', answer: '', hint: '', deck: this.decks[0] }; // Reset with the first deck as default
+    this.showCongratsModal = true;
+  } else {
+    alert("Please fill in all fields before adding a question.");
+  }
+},
     closeModal() {
       this.showCongratsModal = false;
     },

@@ -18,10 +18,9 @@
         <div class="deck-selection">
           <label for="deck">For which deck?</label>
           <select class="pointer" id="deck" v-model="schedule.deck" required>
-            <option value="" disabled>Select your deck</option>
-            <option value="COMP551">COMP551</option>
-            <option value="COMP421">COMP421</option>
-          </select>
+  <option value="" disabled>Select your deck</option>
+  <option v-for="deck in decks" :key="deck" :value="deck">{{ deck }}</option>
+</select>
         </div>
       </div>
       <row>
@@ -41,9 +40,13 @@ export default {
   },
   data() {
     return {
+      decks: [],
       daysOfWeek: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
       schedule: this.getDefaultSchedule()
     };
+  },
+  created() {
+    this.loadDecks(); // Load decks when the component is created
   },
   computed: {
     isEditMode() {
@@ -77,6 +80,12 @@ export default {
           this.$emit('create', this.schedule);
         }
         this.closeModal();
+      }
+    },
+    loadDecks() {
+      const storedDecks = localStorage.getItem('decks');
+      if (storedDecks) {
+        this.decks = JSON.parse(storedDecks);
       }
     },
     closeModal() {
