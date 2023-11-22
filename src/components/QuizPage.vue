@@ -13,13 +13,23 @@
       <div class="question-section">
         <h1>Question {{ currentQuestionIndex + 1 }}</h1>
         <p>{{ questions[currentQuestionIndex].text }}</p>
-        <button class="reveal-button" @click="revealAnswer">Reveal</button>
+        <button class="reveal-button" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
         <div v-if="answerRevealed[currentQuestionIndex]" class="answer-section">
           {{ questions[currentQuestionIndex].answer }}
         </div>
       </div>
       <button class="back-button" @click="goBack">Back to Previous Page</button>
       <button v-if="currentQuestionIndex < questions.length - 1" @click="nextQuestion">Next</button>
+    </div>
+    <div v-if="feedbackModalVisible" class="modal">
+      <div class="modal-content">
+        <h2>Answer</h2>
+        <p>{{ questions[currentQuestionIndex].answer }}</p>
+        <h3>How correct was your answer?</h3>
+        <button @click="handleFeedback('wrong')">Wrong</button>
+        <button @click="handleFeedback('meh')">Meh</button>
+        <button @click="handleFeedback('perfect')">Perfect!</button>
+      </div>
     </div>
   </div>
 </template>
@@ -34,13 +44,18 @@ export default {
       questions: [],
       answerRevealed: [],
       currentScore: 0,
-      currentQuestionIndex: 0
+      currentQuestionIndex: 0,
+      feedbackModalVisible: false,
     };
   },
   created() {
     this.loadQuestions();
   },
   methods: {
+    selectDeck(deck) {
+    this.selectedDeck = deck;
+    this.loadQuestions(); // Call loadQuestions after setting selectedDeck
+  },
     loadQuestions() {
       try {
         const questions = localStorage.getItem('questions');
@@ -57,14 +72,26 @@ export default {
     redirectToCreateQuestions() {
       this.$router.push('/create-questions'); // Update this path as per your route configuration
     },
-
+    handleFeedback(response) {
+      if (response === 'perfect') {
+        this.currentScore += 2; 
+      } else if (response === 'meh') {
+        this.currentScore += 1; 
+      }
+    this.feedbackModalVisible = false; // Hide the feedback modal
+   },
+    closeModal() {
+    this.feedbackModalVisible = false; // Also hide the feedback modal when closing
+   },
     revealAnswer() {
       this.$set(this.answerRevealed, this.currentQuestionIndex, true);
-      this.currentScore++;
+      currentscore++;
+      this.feedbackModalVisible = true;
     },
     nextQuestion() {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+      this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
       }
     },
     goBack() {
@@ -129,6 +156,40 @@ export default {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
 }
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 
 .back-button {
     padding: 10px 15px;
