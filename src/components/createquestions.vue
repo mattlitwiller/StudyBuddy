@@ -8,8 +8,7 @@
       <div class="card-header">
         <label for="deck">Question for Deck:</label>
         <select class="pointer" v-model="newQuestion.deck" id="deck">
-          <option value="COMP551">COMP551</option>
-          <option value="COMP421">COMP421</option>
+          <option v-for="deck in decks" :key="deck" :value="deck">{{ deck }}</option>
         </select>
       </div>
       <div class="card-body">
@@ -64,23 +63,35 @@
 export default {
   data() {
     return {
-      newQuestion: {
-        text: '',
-        answer: '',
-        hint: '',
-        deck: 'COMP551' // Default deck selection
-      },
-      questions: [],
-      showCongratsModal: false
-    };
+      decks: [], // Initialize decks as an empty array
+    newQuestion: {
+      text: '',
+      answer: '',
+      hint: '',
+      deck: '' // Initially, no default deck is selected
+    },
+    questions: [],
+    showCongratsModal: false
+  };
   },
   created() {
+    this.loadDecks();
     this.loadQuestions();
   },
   methods: {
     goToMenu() {
       this.$router.push('/menu');
     },
+    loadDecks() {
+    const storedDecks = localStorage.getItem('decks');
+    if (storedDecks) {
+      this.decks = JSON.parse(storedDecks);
+    }
+    if (this.decks.length > 0) {
+      this.newQuestion.deck = this.decks[0]; // Set the first deck as the default selected deck
+    }
+  },
+
     goBack() {
       this.$router.push('/menu');
     },

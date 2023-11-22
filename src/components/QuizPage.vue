@@ -13,7 +13,7 @@
       <div class="question-section">
         <h1>Question {{ currentQuestionIndex + 1 }}</h1>
         <p>{{ questions[currentQuestionIndex].text }}</p>
-        <button class="reveal-button" @click="revealAnswer">Reveal</button>
+        <button class="reveal-button" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
         <div v-if="answerRevealed[currentQuestionIndex]" class="answer-section">
           {{ questions[currentQuestionIndex].answer }}
         </div>
@@ -63,10 +63,11 @@ export default {
       this.currentScore++;
     },
     nextQuestion() {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
-      }
-    },
+  if (this.currentQuestionIndex < this.questions.length - 1) {
+    this.currentQuestionIndex++;
+    this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
+    }
+  },
     goBack() {
       window.history.back();
     }

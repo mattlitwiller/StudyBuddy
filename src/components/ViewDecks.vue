@@ -10,11 +10,12 @@
         <div class="list-group list-group-flush">
           <div v-for="deck in decks" :key="deck" class="list-group-item">
             <button class="btn btn-light" @click="selectDeck(deck)" style="width: 500px; margin: auto;">{{ deck }}</button>
+            <button class="btn btn-danger float-end" @click="deleteDeck(deck)">Delete</button> <!-- Delete button for each deck -->
           </div>
         </div>
       </div>
       <div class="card-footer">
-    <button class="btn btn-primary" @click="openCreateDeckDialog">Create Deck</button>
+        <button class="btn btn-primary" @click="openCreateDeckDialog">Create Deck</button>
       </div>
     </div>
     <br>
@@ -43,28 +44,27 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
-          <button class="btn btn-danger"> Delete Deck</button>
+          <button class="btn btn-danger"> Delete Deck</button> <!-- You might want to bind this button as well -->
         </div>
       </div>
     </div>
     <dialog id="createDeckDialog" class="dialog-custom">
-    <form method="dialog" class="dialog-form">
-      <div class="dialog-header">
-        <h5 class="dialog-title">Create New Deck</h5>
-        <button type="button" class="btn-close" @click="closeCreateDeckDialog"></button>
-      </div>
-      <div class="dialog-body">
-        <label for="newDeckName" class="form-label">Name:</label>
-        <input type="text" id="newDeckName" class="form-control" v-model="newDeckName" required>
-      </div>
-      <div class="dialog-footer">
-        <button type="submit" class="btn btn-primary" @click="createNewDeck">Create</button>
-      </div>
-    </form>
-  </dialog>
+      <form method="dialog" class="dialog-form">
+        <div class="dialog-header">
+          <h5 class="dialog-title">Create New Deck</h5>
+          <button type="button" class="btn-close" @click="closeCreateDeckDialog"></button>
+        </div>
+        <div class="dialog-body">
+          <label for="newDeckName" class="form-label">Name:</label>
+          <input type="text" id="newDeckName" class="form-control" v-model="newDeckName" required>
+        </div>
+        <div class="dialog-footer">
+          <button type="submit" class="btn btn-primary" @click="createNewDeck">Create</button>
+        </div>
+      </form>
+    </dialog>
   </div>
 </template>
-
 <script>
 import QuizPage from './QuizPage.vue'; // Make sure the path is correct
 export default {
@@ -73,15 +73,16 @@ export default {
   },
   data() {
     return {
-      decks: ['COMP551', 'COMP421'],
-      selectedDeck: null,
-      questions: [],
-      showQuiz: false,
-      newDeckName: '',
+      decks: [], // Initialize as empty
+    selectedDeck: null,
+    questions: [],
+    showQuiz: false,
+    newDeckName: '',
     };
   },
   created() {
-    this.loadQuestions();
+    this.loadDecks(); // Load decks from localStorage
+  this.loadQuestions();
   },
   computed: {
     filteredQuestions() {
@@ -95,6 +96,32 @@ export default {
         this.questions = JSON.parse(storedQuestions);
       }
     },
+    loadDecks() {
+    const storedDecks = localStorage.getItem('decks');
+    if (storedDecks) {
+      this.decks = JSON.parse(storedDecks);
+    } else {
+      this.decks = ['COMP551', 'COMP421']; // Default decks if none are stored
+    }
+  },
+  deleteDeck(deckToDelete) {
+    if (confirm('Are you sure you want to delete this deck and all its questions?')) {
+      // Remove the deck from the decks array
+      this.decks = this.decks.filter(deck => deck !== deckToDelete);
+
+      // Remove associated questions from the questions array
+      this.questions = this.questions.filter(question => question.deck !== deckToDelete);
+
+      // Update localStorage
+      localStorage.setItem('decks', JSON.stringify(this.decks));
+      localStorage.setItem('questions', JSON.stringify(this.questions));
+
+      // Reset selectedDeck if it was the one deleted
+      if (this.selectedDeck === deckToDelete) {
+        this.selectedDeck = null;
+      }
+    }
+  },
     openCreateDeckDialog() {
       const dialog = document.getElementById('createDeckDialog');
       if (dialog.showModal) {
@@ -104,12 +131,14 @@ export default {
       }
     },
     createNewDeck() {
-      if (this.newDeckName) {
-        this.decks.push(this.newDeckName);
-        this.newDeckName = ''; // Reset the input after adding the deck
-        document.getElementById('createDeckDialog').close();
-      }
-    },
+    if (this.newDeckName) {
+      this.decks.push(this.newDeckName);
+      localStorage.setItem('decks', JSON.stringify(this.decks)); // Save updated decks list
+      this.newDeckName = ''; // Reset the input after adding the deck
+      document.getElementById('createDeckDialog').close();
+    }
+  },
+
     selectDeck(deck) {
       this.selectedDeck = deck;
     },
