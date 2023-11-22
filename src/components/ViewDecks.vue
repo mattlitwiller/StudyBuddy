@@ -46,7 +46,7 @@
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
-          <button class="btn btn-danger"> Delete Deck</button>
+          <button class="btn btn-danger" @click="deleteDeck(selectedDeck)">Delete Deck</button>
         </div>
       </div>
     </div>
@@ -88,6 +88,24 @@ data() {
       quizError: '' // Add this to handle error messages
     };
   },
+  deleteDeck(deckToDelete) {
+  if (confirm(`Are you sure you want to delete the deck "${deckToDelete}" and all its questions?`)) {
+    // Remove the deck from the decks array
+    this.decks = this.decks.filter(deck => deck !== deckToDelete);
+
+    // Remove associated questions from the questions array
+    this.questions = this.questions.filter(question => question.deck !== deckToDelete);
+
+    // Update localStorage
+    localStorage.setItem('decks', JSON.stringify(this.decks));
+    localStorage.setItem('questions', JSON.stringify(this.questions));
+
+    // Reset selectedDeck if it was the one deleted
+    if (this.selectedDeck === deckToDelete) {
+      this.selectedDeck = null;
+    }
+  }
+},
   created() {
     this.loadDecks();
     this.loadQuestions();
