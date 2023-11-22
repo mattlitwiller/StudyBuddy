@@ -15,8 +15,6 @@
       </div>
       <div class="card-footer">
         <button class="btn btn-primary" @click="openCreateDeckDialog">Create Deck</button>
-
-        <button class="btn btn-primary">Create Deck</button>
       </div>
     </div>
     <br>
