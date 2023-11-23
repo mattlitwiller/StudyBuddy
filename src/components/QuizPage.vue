@@ -22,15 +22,16 @@
       <button v-if="currentQuestionIndex < questions.length - 1" @click="nextQuestion">Next</button>
     </div>
     <div v-if="feedbackModalVisible" class="modal">
-      <div class="modal-content">
-        <h2>Answer</h2>
-        <p>{{ questions[currentQuestionIndex].answer }}</p>
-        <h3>How correct was your answer?</h3>
-        <button @click="handleFeedback('wrong')">Wrong</button>
-        <button @click="handleFeedback('meh')">Meh</button>
-        <button @click="handleFeedback('perfect')">Perfect!</button>
-      </div>
+    <div class="modal-content">
+      <img src="@/assets/buddy-approval.png" alt="Approval Buddy" class="modal-logo"/>
+      <h2>Answer</h2>
+      <p>{{ questions[currentQuestionIndex].answer }}</p>
+      <h3>How correct was your answer?</h3>
+      <button @click="handleFeedback('wrong')">Wrong</button>
+      <button @click="handleFeedback('meh')">Meh</button>
+      <button @click="handleFeedback('perfect')">Perfect!</button>
     </div>
+  </div>
   </div>
 </template>
 
@@ -38,10 +39,18 @@
 export default {
   props: {
     selectedDeck: String,
+    questions: Array, // Make sure this is passed from the parent component
   },
+  watch: {
+    selectedDeck(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.initializeQuestions();
+      }
+    }
+  },
+
   data() {
     return {
-      questions: [],
       answerRevealed: [],
       currentScore: 0,
       currentQuestionIndex: 0,
@@ -49,26 +58,35 @@ export default {
     };
   },
   created() {
-    this.loadQuestions();
+    this.initializeQuestions();
   },
   methods: {
     selectDeck(deck) {
       this.selectedDeck = deck;
       this.loadQuestions(); // Call loadQuestions after setting selectedDeck
     },
-    loadQuestions() {
-      try {
-        const questions = localStorage.getItem('questions');
-        if (questions) {
-          this.questions = JSON.parse(questions);
-          this.answerRevealed = this.questions.map(() => false);
-        } else {
-          console.error("No questions found in localStorage.");
-        }
-      } catch (e) {
-        console.error("Error parsing questions from localStorage: ", e.message);
-      }
+    initializeQuestions() {
+      // Use a local copy of questions based on the prop
+      this.localQuestions = this.questions.filter(question => question.deck === this.selectedDeck);
+      this.answerRevealed = this.localQuestions.map(() => false);
     },
+    loadQuestions() {
+    try {
+      const allQuestions = localStorage.getItem('questions');
+      if (allQuestions) {
+        // Convert the string back into an array
+        const parsedQuestions = JSON.parse(allQuestions);
+        // Filter the questions to only include those for the selected deck
+        this.questions = parsedQuestions.filter(question => question.deck === this.selectedDeck);
+        // Initialize the answerRevealed array based on the filtered questions
+        this.answerRevealed = this.questions.map(() => false);
+      } else {
+        console.error("No questions found in localStorage.");
+      }
+    } catch (e) {
+      console.error("Error parsing questions from localStorage: ", e.message);
+    }
+  },
     redirectToCreateQuestions() {
       this.$router.push('/create-questions'); // Update this path as per your route configuration
     },
@@ -180,6 +198,12 @@ export default {
   cursor: pointer;
 }
 
+.modal-logo {
+  display: block;
+  margin: 0 auto;
+  max-width: 100px; /* Or the size you want */
+  height: auto;
+}
 
 .back-button {
     padding: 10px 15px;
