@@ -32,7 +32,7 @@ Install the init add-on for vue-cli:
 $ npm install -g @vue/cli-init
 ```
 
-## Running the Alpha System
+## Running the Application
 
 Navigate to the StudyBuddy directory and enter the following commands.
 
