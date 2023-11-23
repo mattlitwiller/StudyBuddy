@@ -33,7 +33,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 export default {
   props: {
@@ -53,9 +53,9 @@ export default {
   },
   methods: {
     selectDeck(deck) {
-    this.selectedDeck = deck;
-    this.loadQuestions(); // Call loadQuestions after setting selectedDeck
-  },
+      this.selectedDeck = deck;
+      this.loadQuestions(); // Call loadQuestions after setting selectedDeck
+    },
     loadQuestions() {
       try {
         const questions = localStorage.getItem('questions');
@@ -74,24 +74,22 @@ export default {
     },
     handleFeedback(response) {
       if (response === 'perfect') {
-        this.currentScore += 2; 
+        this.currentScore += 1; // Add 1 point for 'perfect'
       } else if (response === 'meh') {
-        this.currentScore += 1; 
+        this.currentScore += 0.5; // Add 0.5 points for 'meh'
       }
-    this.feedbackModalVisible = false; // Hide the feedback modal
-   },
-    closeModal() {
-    this.feedbackModalVisible = false; // Also hide the feedback modal when closing
-   },
+      // No points are added for 'wrong', so no need for an else if or else statement
+      this.feedbackModalVisible = false; // Hide the feedback modal after handling feedback
+    },
     revealAnswer() {
       this.$set(this.answerRevealed, this.currentQuestionIndex, true);
-      currentscore++;
+      // Trigger the feedback modal to show
       this.feedbackModalVisible = true;
     },
     nextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length - 1) {
-      this.currentQuestionIndex++;
-      this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
+      if (this.currentQuestionIndex < this.questions.length - 1) {
+        this.currentQuestionIndex++;
+        this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
       }
     },
     goBack() {
@@ -147,16 +145,7 @@ export default {
 
 /* Modal Styles */
 .modal {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal {
+  display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -164,6 +153,7 @@ export default {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
