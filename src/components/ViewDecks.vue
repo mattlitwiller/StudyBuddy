@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <button class="btn btn-primary" @click="startQuiz">Start Quiz</button>
+          <button class="btn btn-primary" v-if="filteredQuestions.length > 0" @click="startQuiz">Start Quiz</button>
           <button class="btn btn-danger" @click="deleteDeck(selectedDeck)">Delete Deck</button>
         </div>
       </div>
