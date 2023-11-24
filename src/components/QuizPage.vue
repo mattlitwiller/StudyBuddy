@@ -113,12 +113,14 @@ export default {
       this.$set(this.answerRevealed, this.currentQuestionIndex, true);
       // Trigger the feedback modal to show
       this.feedbackModalVisible = true;
+      this.hintRevealed = false;
     },
     nextQuestion() {
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
         this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
       }
+      this.hintRevealed = false;
     },
     goBack() {
       window.history.back();
