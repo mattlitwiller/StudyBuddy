@@ -1,5 +1,45 @@
 <template>
-  <div class="quiz-container">
+  <div>
+    <div class="container" style="width:600px; margin: auto;">
+      <button class="btn btn-secondary" style="margin-bottom: 20px;" @click="goBack">Back</button>
+    </div>
+    <div class="card" style="width: 600px; margin: auto;">
+      <div class="card-header">
+        Score : {{ currentScore }} / {{ questions.length }}
+      </div>
+      <div class="card-body">
+        <b>
+          <p>Question {{ currentQuestionIndex + 1 }} : </p>
+        </b>
+        <p>{{ questions[currentQuestionIndex].text }}</p>
+        <div v-if="answerRevealed[currentQuestionIndex]" class="answer-section">
+          {{ questions[currentQuestionIndex].hint }}
+        </div>
+      </div>
+      <div class="card-header">
+        <button class="btn btn-outline-primary" @click="revealAnswer"
+          v-if="!answerRevealed[currentQuestionIndex]">Hint</button>
+        <button class="btn btn-success" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
+        <button class="btn btn-outline-warning" v-if="currentQuestionIndex < questions.length - 1"
+          @click="nextQuestion">Skip</button>
+      </div>
+    </div>
+    <div v-if="feedbackModalVisible" class="modal">
+      <div class="modal-content">
+        <img src="@/assets/buddy-approval.png" alt="Approval Buddy" class="modal-logo" />
+        <b><p>Q{{ currentQuestionIndex + 1 }} : </p></b>
+        <p>{{ questions[currentQuestionIndex].text }}</p>
+        <b><p>A:</p></b>
+        <p>{{ questions[currentQuestionIndex].answer }}</p>
+        <h2>How correct was your answer?</h2>
+        <button class="btn btn-danger" @click="handleFeedback('wrong')">Wrong</button>
+        <button class="btn btn-warning" @click="handleFeedback('meh')">Meh</button>
+        <button class="btn btn-success" @click="handleFeedback('perfect')">Perfect!</button>
+      </div>
+    </div>
+  </div>
+</template>
+<!-- <div class="quiz-container">
     <div v-if="questions.length === 0" class="no-questions">
       There are no questions to quiz.
       <button class="create-questions-button" @click="redirectToCreateQuestions">
@@ -31,9 +71,7 @@
       <button @click="handleFeedback('perfect')">Perfect!</button>
     </div>
   </div>
-  </div>
-</template>
-
+  </div> -->
 <script>
 export default {
   props: {
@@ -70,22 +108,22 @@ export default {
       this.answerRevealed = this.localQuestions.map(() => false);
     },
     loadQuestions() {
-    try {
-      const allQuestions = localStorage.getItem('questions');
-      if (allQuestions) {
-        // Convert the string back into an array
-        const parsedQuestions = JSON.parse(allQuestions);
-        // Filter the questions to only include those for the selected deck
-        this.questions = parsedQuestions.filter(question => question.deck === this.selectedDeck);
-        // Initialize the answerRevealed array based on the filtered questions
-        this.answerRevealed = this.questions.map(() => false);
-      } else {
-        console.error("No questions found in localStorage.");
+      try {
+        const allQuestions = localStorage.getItem('questions');
+        if (allQuestions) {
+          // Convert the string back into an array
+          const parsedQuestions = JSON.parse(allQuestions);
+          // Filter the questions to only include those for the selected deck
+          this.questions = parsedQuestions.filter(question => question.deck === this.selectedDeck);
+          // Initialize the answerRevealed array based on the filtered questions
+          this.answerRevealed = this.questions.map(() => false);
+        } else {
+          console.error("No questions found in localStorage.");
+        }
+      } catch (e) {
+        console.error("Error parsing questions from localStorage: ", e.message);
       }
-    } catch (e) {
-      console.error("Error parsing questions from localStorage: ", e.message);
-    }
-  },
+    },
     redirectToCreateQuestions() {
       this.$router.push('/create-questions'); // Update this path as per your route configuration
     },
@@ -137,7 +175,8 @@ export default {
 
 .reveal-button {
   padding: 10px 15px;
-  background-color: #d3d3d3; /* Light gray */
+  background-color: #d3d3d3;
+  /* Light gray */
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -145,7 +184,8 @@ export default {
 }
 
 .reveal-button:hover {
-  background-color: #c0c0c0; /* Slightly darker gray */
+  background-color: #c0c0c0;
+  /* Slightly darker gray */
 }
 
 .answer-section {
@@ -158,32 +198,43 @@ export default {
 .helper-section {
   /* Your styles for the helper character and question mark */
 }
+
 .no-questions {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
-  }
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
 
 /* Modal Styles */
 .modal {
-  display: block; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
 }
 
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
+  /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 80%;
+  /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -204,23 +255,28 @@ export default {
 .modal-logo {
   display: block;
   margin: 0 auto;
-  max-width: 100px; /* Or the size you want */
+  max-width: 100px;
+  /* Or the size you want */
   height: auto;
 }
 
 .back-button {
-    padding: 10px 15px;
-    background-color: #f0f0f0; /* Lighter gray for differentiation */
-    border: 1px solid #d3d3d3; /* Slightly darker border */
-    border-radius: 20px;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-right: 10px; /* Spacing between this and other buttons */
-  }
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  /* Lighter gray for differentiation */
+  border: 1px solid #d3d3d3;
+  /* Slightly darker border */
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 10px;
+  /* Spacing between this and other buttons */
+}
 
-  .back-button:hover {
-    background-color: #e0e0e0; /* Slightly darker on hover */
-  }
+.back-button:hover {
+  background-color: #e0e0e0;
+  /* Slightly darker on hover */
+}
 
 .modal-content {
   background-color: #fefefe;
