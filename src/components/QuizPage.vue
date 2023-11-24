@@ -12,13 +12,13 @@
           <p>Question {{ currentQuestionIndex + 1 }} : </p>
         </b>
         <p>{{ questions[currentQuestionIndex].text }}</p>
-        <div v-if="answerRevealed[currentQuestionIndex]" class="answer-section">
+        <!-- add the reveal of the hint here -->
+        <div v-if=hintRevealed class="answer-section">
           {{ questions[currentQuestionIndex].hint }}
         </div>
       </div>
       <div class="card-header">
-        <button class="btn btn-outline-primary" @click="revealAnswer"
-          v-if="!answerRevealed[currentQuestionIndex]">Hint</button>
+        <button class="btn btn-outline-primary" @click="revealHint()">Hint</button>
         <button class="btn btn-success" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
         <button class="btn btn-outline-warning" v-if="currentQuestionIndex < questions.length - 1"
           @click="nextQuestion">Skip</button>
@@ -39,39 +39,7 @@
     </div>
   </div>
 </template>
-<!-- <div class="quiz-container">
-    <div v-if="questions.length === 0" class="no-questions">
-      There are no questions to quiz.
-      <button class="create-questions-button" @click="redirectToCreateQuestions">
-        Create Questions
-      </button>
-    </div>
-    <div v-else>
-      <div class="score-section">
-        SCORE ----------------- {{ currentScore }}/{{ questions.length }}
-      </div>
-      <div class="question-section">
-        <h1>Question {{ currentQuestionIndex + 1 }}</h1>
-        <p>{{ questions[currentQuestionIndex].text }}</p>
-        <button class="reveal-button" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
-        <div v-if="answerRevealed[currentQuestionIndex]" class="answer-section">
-          {{ questions[currentQuestionIndex].answer }}
-        </div>
-      </div>
-      <button class="back-button" @click="goBack">Back to Previous Page</button>
-    </div>
-    <div v-if="feedbackModalVisible" class="modal">
-    <div class="modal-content">
-      <img src="@/assets/buddy-approval.png" alt="Approval Buddy" class="modal-logo"/>
-      <h2>Answer</h2>
-      <p>{{ questions[currentQuestionIndex].answer }}</p>
-      <h3>How correct was your answer?</h3>
-      <button @click="handleFeedback('wrong')">Wrong</button>
-      <button @click="handleFeedback('meh')">Meh</button>
-      <button @click="handleFeedback('perfect')">Perfect!</button>
-    </div>
-  </div>
-  </div> -->
+
 <script>
 export default {
   props: {
@@ -92,6 +60,7 @@ export default {
       currentScore: 0,
       currentQuestionIndex: 0,
       feedbackModalVisible: false,
+      hintRevealed: false,
     };
   },
   created() {
@@ -153,6 +122,9 @@ export default {
     },
     goBack() {
       window.history.back();
+    },
+    revealHint(){
+      this.hintRevealed = true;
     }
   }
 };
