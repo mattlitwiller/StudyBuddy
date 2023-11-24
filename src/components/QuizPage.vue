@@ -19,7 +19,6 @@
         </div>
       </div>
       <button class="back-button" @click="goBack">Back to Previous Page</button>
-      <button v-if="currentQuestionIndex < questions.length - 1" @click="nextQuestion">Next</button>
     </div>
     <div v-if="feedbackModalVisible" class="modal">
     <div class="modal-content">
@@ -98,6 +97,10 @@ export default {
       }
       // No points are added for 'wrong', so no need for an else if or else statement
       this.feedbackModalVisible = false; // Hide the feedback modal after handling feedback
+      if (this.currentQuestionIndex < this.questions.length - 1) {
+        this.currentQuestionIndex++;
+        this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
+      }
     },
     revealAnswer() {
       this.$set(this.answerRevealed, this.currentQuestionIndex, true);
