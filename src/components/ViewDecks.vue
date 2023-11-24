@@ -27,6 +27,7 @@
         <div class="card-body">
           <div class="list-group list-group-flush">
             <div v-if="filteredQuestions.length <= 0">No questions for this deck yet, go make some!</div>
+            <button class="btn btn-success" @click="navigateToCreateQuestions">Create Questions</button>
             <div v-for="(question, index) in filteredQuestions" :key="index">
               <div class="row" style="padding:10px;">
                 <div class="col-sm-10" style="text-align: left;">
@@ -38,7 +39,6 @@
                   <div> {{ question.hint }}</div>
                 </div>
                 <div class="col-sm-2" style="display: grid; align-content: center;">
-               
                 </div>
               </div>
             </div>
@@ -126,6 +126,9 @@ data() {
         }
       }
     },
+    navigateToCreateQuestions() {
+      this.$router.push({ name: 'createquestions' }); // Adjust as per your routing setup
+    },
     loadQuestions() {
       const storedQuestions = localStorage.getItem('questions');
       if (storedQuestions) {
@@ -195,7 +198,7 @@ data() {
         name: 'QuizPage',
         params: {
           deck: this.selectedDeck,
-          questions: this.filteredQuestions
+          questions: this.filteredQuestions // Only the questions for the selected deck
         }
       });
     }
