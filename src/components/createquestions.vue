@@ -21,7 +21,9 @@
       </div>
       <div class="card-footer">
         <button class="btn btn-primary" @click="addQuestion"
-          :disabled="!newQuestion.text || !newQuestion.answer">Add Question</button>
+          :disabled="!newQuestion.text || !newQuestion.answer"
+          @mouseover="handleMouseOver" @mouseleave="handleMouseLeave">Add Question</button>
+        <div v-if="errorContent" class=errorContent> {{errorContent}} </div>
       </div>
     </div>
     <br>
@@ -64,6 +66,7 @@
 export default {
   data() {
     return {
+      errorContent: '',
       decks: [], // Initialize decks as an empty array
     newQuestion: {
       text: '',
@@ -107,9 +110,21 @@ export default {
     this.newQuestion = { text: '', answer: '', hint: '', deck: this.decks[0] }; // Reset with the first deck as default
     this.showCongratsModal = true;
   } else {
-    alert("Please fill in all fields before adding a question.");
+    alert("Please fill in question and answer fields before adding a question.");
   }
 },
+
+  handleMouseOver() {
+    if(!this.newQuestion.text || !this.newQuestion.answer){
+      this.errorContent = "Question and answer fields are mandatory"
+      console.log(this.errorContent)
+    }
+  },
+
+  handleMouseLeave() {
+    this.errorContent = ""
+    console.log(this.errorContent)
+  },
 
     closeModal() {
       this.showCongratsModal = false;
@@ -231,5 +246,10 @@ h2 {
 
 .pointer {
   cursor: pointer;
+}
+
+.errorContent {
+  padding: 20px;
+  color: red;
 }
 </style>
