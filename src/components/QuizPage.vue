@@ -22,6 +22,8 @@
         <button class="btn btn-success" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
         <button class="btn btn-outline-warning" v-if="currentQuestionIndex < questions.length - 1"
           @click="nextQuestion">Skip</button>
+        <button class="btn btn-primary" @click="finishQuiz" v-if="currentQuestionIndex === questions.length -1 ">Finish Quiz</button>
+
       </div>
     </div>
     <div v-if="feedbackModalVisible" class="modal">
@@ -109,6 +111,10 @@ export default {
         this.$set(this.answerRevealed, this.currentQuestionIndex, false); // Reset reveal state for the next question
       }
     },
+    finishQuiz() {
+    // Redirect to the main page
+    this.$router.push('/menu'); // Update this path as per your route configuration for the main page
+  },
     revealAnswer() {
       this.$set(this.answerRevealed, this.currentQuestionIndex, true);
       // Trigger the feedback modal to show
