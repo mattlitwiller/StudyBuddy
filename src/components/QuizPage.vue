@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container" style="width:600px; margin: auto;">
-      <button class="btn btn-secondary" style="margin-bottom: 20px;" @click="goBack">Back</button>
+      <button class="btn btn-secondary" style="margin-bottom: 20px;" @click="goBack">Exit</button>
     </div>
     <div class="card" style="width: 600px; margin: auto;">
       <div class="card-header">
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="card-header">
-        <button class="btn btn-outline-primary" @click="revealHint()">Hint</button>
+        <button v-if="questions[currentQuestionIndex].hint!='' && !hintRevealed" class="btn btn-outline-primary" @click="revealHint()">Hint</button>
         <button class="btn btn-success" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
         <button class="btn btn-outline-warning" v-if="currentQuestionIndex < questions.length - 1"
           @click="nextQuestion">Skip</button>
