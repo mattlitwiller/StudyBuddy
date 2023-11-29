@@ -54,7 +54,9 @@
       <form method="dialog" class="dialog-form">
         <div class="dialog-header">
           <h5 class="dialog-title">Create New Deck</h5>
-          <button type="button" class="btn-close" @click="closeCreateDeckDialog"></button>
+          <button type="button" class="btn-close" @click="closeCreateDeckDialog">
+           <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="dialog-body">
           <label for="newDeckName" class="form-label">Name:</label>
