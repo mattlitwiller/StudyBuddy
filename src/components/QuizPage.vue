@@ -22,9 +22,8 @@
         <button class="btn btn-success" @click="revealAnswer" v-if="!answerRevealed[currentQuestionIndex]">Reveal</button>
         <button class="btn btn-outline-warning" v-if="currentQuestionIndex < questions.length - 1"
           @click="nextQuestion">Skip</button>
-        <button class="btn btn-primary" @click="finishQuiz" v-if="currentQuestionIndex === questions.length -1 ">Finish Quiz</button>
-
       </div>
+      <button class="btn btn-primary" @click="finishQuiz" v-if="currentQuestionIndex === questions.length -1 ">Finish Quiz</button>
     </div>
     <div v-if="feedbackModalVisible" class="modal">
       <div class="modal-content">

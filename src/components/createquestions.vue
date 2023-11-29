@@ -107,24 +107,12 @@ export default {
   if (this.newQuestion.text && this.newQuestion.answer) {
     this.questions.push({ ...this.newQuestion });
     this.saveQuestions();
-    this.newQuestion = { text: '', answer: '', hint: '', deck: this.decks[0] }; // Reset with the first deck as default
+    this.newQuestion = { text: '', answer: '', hint: '',deck: this.newQuestion.deck }; // Reset with the first deck as default
     this.showCongratsModal = true;
   } else {
-    alert("Please fill in question and answer fields before adding a question.");
+    alert("Please fill in all fields before adding a question.");
   }
 },
-
-  handleMouseOver() {
-    if(!this.newQuestion.text || !this.newQuestion.answer){
-      this.errorContent = "Question and answer fields are mandatory"
-      console.log(this.errorContent)
-    }
-  },
-
-  handleMouseLeave() {
-    this.errorContent = ""
-    console.log(this.errorContent)
-  },
 
     closeModal() {
       this.showCongratsModal = false;
